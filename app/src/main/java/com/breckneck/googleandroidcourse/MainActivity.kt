@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             GoogleAndroidCourseTheme() {
 
-                Surface() {
+                Surface {
 //                    MessageCard(msg = Message(first = "Android", second = "Jetpack Compose"))
 //                    Conversation(messages = SampleData.conversationSample)
                     App()
