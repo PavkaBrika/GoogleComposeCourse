@@ -1,5 +1,8 @@
 package com.breckneck.googleandroidcourse
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -9,16 +12,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.breckneck.googleandroidcourse.ui.theme.GoogleAndroidCourseTheme
 
 @Composable
 fun App() {
-    var shouldShowOnboarding by rememberSaveable { mutableStateOf(true)}
+    var shouldShowOnboarding by rememberSaveable { mutableStateOf(true) }
 
     if (shouldShowOnboarding) {
-        OnboardingScreen(onContinueClicked = {shouldShowOnboarding = false})
+        OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false })
     } else {
         Tables()
     }
@@ -38,8 +42,14 @@ fun Tables() {
 
 @Composable
 fun Table(name: String) {
-    val expanded = remember { mutableStateOf(false) }
-    val extraPadding = if (expanded.value) 48.dp else 0.dp
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    val extraPadding by animateDpAsState(
+        if (expanded) 48.dp else 0.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        )
+    )
     Surface(color = MaterialTheme.colors.primary, modifier = Modifier.padding(4.dp)) {
         Row(
             modifier = Modifier
@@ -49,16 +59,16 @@ fun Table(name: String) {
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(bottom = extraPadding)
+                    .padding(bottom = extraPadding.coerceAtLeast(0.dp))
             ) {
                 Text(text = "Hello,", fontSize = 25.sp)
                 Text(text = name, fontSize = 25.sp)
             }
             Spacer(modifier = Modifier.width(8.dp))
             OutlinedButton(
-                onClick = { expanded.value = !expanded.value },
+                onClick = { expanded = !expanded },
             ) {
-                Text(text = if (expanded.value) "Show more" else "Show less")
+                Text(text = if (expanded) "Show more" else "Show less")
             }
         }
     }
