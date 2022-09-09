@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GoogleAndroidCourse</string>
+    <string name="show_more" translatable="false">Show more</string>
+    <string name="show_less" translatable="false">Show less</string>
 </resources>
