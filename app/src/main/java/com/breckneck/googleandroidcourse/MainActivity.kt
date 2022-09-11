@@ -8,6 +8,7 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import com.breckneck.googleandroidcourse.ui.Conversation
 import com.breckneck.googleandroidcourse.ui.SampleData
+import com.breckneck.googleandroidcourse.ui.SearchBar
 import com.breckneck.googleandroidcourse.ui.theme.GoogleAndroidCourseTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +20,8 @@ class MainActivity : ComponentActivity() {
                 Surface {
 //                    MessageCard(msg = Message(first = "Android", second = "Jetpack Compose"))
 //                    Conversation(messages = SampleData.conversationSample)
-                    App()
+//                    App()
+                    SearchBar()
                 }
             }
         }
